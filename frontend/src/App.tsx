@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { BrowserRouter, useLocation } from 'react-router-dom';
+import Sidebar from './components/layout/Sidebar';
+import Navbar from './components/layout/Navbar';
+import PlayerBar from './components/layout/PlayerBar';
+import AppRoutes from './routes/AppRoutes';
+import { PlayerProvider } from './context/PlayerContext';
 
-function App() {
-  const [count, setCount] = useState(0)
+function AppLayout() {
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login';
+
+  if (isLoginPage) {
+    return <AppRoutes />;
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh',
+        overflow: 'hidden',
+      }}
+    >
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+        {/* Sidebar */}
+        <Sidebar />
+
+        {/* Main Content */}
+        <main
+          style={{
+            flex: 1,
+            overflow: 'auto',
+            backgroundColor: '#121212',
+            borderRadius: '8px 8px 0 0',
+            marginLeft: '0',
+            position: 'relative',
+            background: 'linear-gradient(180deg, #333333 0%, #121212 300px)',
+          }}
+        >
+          <Navbar />
+          <AppRoutes />
+        </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+      {/* Player Bar (always at bottom) */}
+      <PlayerBar />
+    </div>
+  );
 }
 
-export default App
+export default function App() {
+  return (
+    <BrowserRouter>
+      <PlayerProvider>
+        <AppLayout />
+      </PlayerProvider>
+    </BrowserRouter>
+  );
+}
