@@ -1,5 +1,5 @@
 {
-  "name": "spotify-clone",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,11 +11,9 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "cookie-parser": "^1.4.7",
-    "dotenv": "^17.3.1",
+    "dot": "^1.1.3",
+    "env": "^0.0.2",
     "express": "^5.2.1",
-    "faaah-error-sound": "^1.0.0",
-    "jsonwebtoken": "^9.0.3",
-    "mysql2": "^3.18.1"
+    "mysql": "^2.18.1"
   }
 }
